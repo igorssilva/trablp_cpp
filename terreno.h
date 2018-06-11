@@ -4,19 +4,17 @@ using std::string;
 #ifndef terreno_h
 #define terreno_h
 
-class terreno : protected imovel
+class terreno : public imovel
 {
-  protected:
+  private:
     int precoMqQd;
     string solo;
 
   public:
-    terreno();
-    terreno(int id);
-    bool isTerrenoArgiloso();
-    bool orderByArea();
-    float preco();
-    
+    terreno(int id, string nome, string solo, int precoMqQd);
+    static bool isTerrenoArgiloso(const imovel &i);
+    bool orderByArea(const terreno &item, const terreno &outro) const;
+    float preco() const;
 };
 
 #endif

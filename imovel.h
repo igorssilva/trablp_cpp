@@ -10,12 +10,12 @@ class imovel
     int id;
 
   public:
-    imovel();
     imovel(int id, string nome);
-    int getId();
-    bool orderByPreco(imovel& item, imovel& outro);
-    virtual float preco() { return 0; };
-    virtual float area() { return 0; };
+    int getId() const;
+    bool orderByPreco(const imovel &item, const imovel &outro);
+    virtual float preco() const { return 0; };
+    virtual float area() const { return 0; };
+    bool operator==(const imovel &i) const;
 };
 
 #endif // imovel_h
