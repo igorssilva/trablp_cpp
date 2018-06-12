@@ -5,17 +5,18 @@ using std::string;
 
 class imovel
 {
-  private:
-    string nome;
-    int id;
+private:
+  string nome;
+  int id;
 
-  public:
-    imovel(int id, string nome);
-    int getId() const;
-    bool orderByPreco(const imovel &item, const imovel &outro);
-    virtual float preco() const { return 0; };
-    virtual float area() const { return 0; };
-    bool operator==(const imovel &i) const;
+public:
+  imovel(){};
+  imovel(int id, string nome);
+  int getId() const;
+  bool orderByPreco(const imovel &item, const imovel &outro);
+  virtual float preco() const { return 0; };
+  virtual float area() const { return 0; };
+  bool operator==(const imovel &i) const;
 };
 
 #endif // imovel_h

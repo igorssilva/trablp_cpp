@@ -1,0 +1,74 @@
+apto
+70718
+Vitor Rocha Poltronieri
+10
+0
+8
+187.1
+7122
+N
+8
+
+trapez
+48507
+Andressa Silva Anyzewski
+R
+4596
+425.5
+834.6
+565.9
+
+triang
+59267
+Luiz Fernando Silva De Oliveira
+A
+1970
+68.0
+749.1
+
+trapez
+48219
+Bruna Lima Silva Merlo
+G
+2058
+178.4
+674.4
+225.6
+
+casa
+44872
+Salime Abib Lima Saade
+3
+9
+7
+92.4
+5438
+210.1
+4338
+
+retang
+56916
+Nathalia Moraes Figueiredo
+R
+5055
+303.9
+148.3
+
+apto
+42205
+Hugo Carvalho De Paula
+10
+6
+2
+85.0
+1937
+S
+11
+
+retang
+44626
+Natasha Lares Kludasch
+R
+7125
+534.4
+60.8

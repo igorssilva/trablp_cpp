@@ -1,0 +1,102 @@
+i
+casa
+56876
+Vinicius Genelhu Abreu De Souza Cobe
+3
+2
+0
+977.3
+5175
+771.1
+6349
+
+i
+apto
+55191
+Leonardo De Souza Reis
+7
+6
+2
+495.0
+7254
+N
+5
+
+i
+triang
+42028
+Gerson Alexandre De Oliveira
+A
+2289
+930.1
+322.0
+
+i
+triang
+72454
+Ana Carolina Braganca Ribeiro
+G
+4893
+204.9
+482.3
+
+e
+72454
+
+i
+apto
+44934
+Rodrigo Andrade Lourenco
+6
+10
+1
+783.6
+7233
+N
+5
+
+i
+triang
+42018
+Fernando Martins Maioli
+A
+6767
+832.0
+592.4
+
+i
+triang
+49117
+Leon Cleres Penido Pinheiro
+A
+174
+67.8
+867.7
+
+i
+triang
+48335
+Adna Pereira Borges Luxinger
+A
+2289
+930.1
+322.0
+
+i
+trapez
+56916
+Nathalia Moraes Figueiredo
+G
+9397
+239.4
+658.6
+756.7
+
+i
+retang
+45066
+Melina Murta Tedesco
+G
+556
+273.1
+45.7

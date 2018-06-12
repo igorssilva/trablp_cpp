@@ -1,16 +1,16 @@
 #include "terreno.h"
 #include <typeinfo>
 
-terreno::terreno(int id, string nome, string solo, int precoMqQd):imovel(id, nome)
+terreno::terreno(int id, string nome, string solo, int precoMtQd):imovel(id, nome)
 {
     this->solo = solo;
-    this->precoMqQd = precoMqQd;
+    this->precoMtQd = precoMtQd;
 }
 
 bool terreno::isTerrenoArgiloso(const imovel& i){
 
-    if(const terreno* test = dynamic_cast<const terreno*>(&i)){
-        return test->solo == "G";
+    if(const terreno* t = dynamic_cast<const terreno*>(&i)){
+        return t->solo == "G";
     }
 
     return false;
@@ -40,5 +40,5 @@ bool terreno::orderByArea(const terreno &item, const terreno &outro) const
 
 float terreno::preco() const
 {
-    return this->precoMqQd * fatorMultiplicativo(this->solo);
+    return this->precoMtQd * fatorMultiplicativo(this->solo);
 }

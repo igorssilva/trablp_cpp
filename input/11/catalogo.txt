@@ -1,0 +1,40 @@
+apto
+41364
+Fernando Zanardo
+9
+9
+1
+868.2
+7357
+N
+8
+
+casa
+48251
+Eduardo Pelegrineti Targueta
+4
+9
+3
+688.3
+310
+309.2
+3945
+
+casa
+55205
+Larissa Guerra Dornelas
+10
+8
+7
+250.7
+5001
+138.1
+8798
+
+retang
+49038
+Luiz Felipe Mota Santana
+R
+7298
+508.6
+152.6

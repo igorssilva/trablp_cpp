@@ -1,0 +1,367 @@
+a
+apto
+48262
+Daniel Patrocinio Zen
+8
+6
+17
+772.5
+7651
+S
+20
+
+i
+casa
+54829
+Jose Roberto Sabino Junior
+0
+6
+5
+788.8
+6290
+992.7
+4410
+
+i
+apto
+40918
+Kliffton Viana Da Silva
+9
+7
+6
+458.4
+8539
+N
+7
+
+i
+trapez
+45173
+Michelle Ivair Cavalcanti De Oliveira
+R
+9363
+446.5
+109.9
+374.6
+
+i
+triang
+45057
+Thaina Pacheco Moreira Barbosa
+G
+1903
+65.6
+632.0
+
+i
+casa
+48255
+Alanderson Dos Reis Monico
+9
+8
+5
+593.2
+5777
+900.9
+7769
+
+i
+triang
+48251
+Eduardo Pelegrineti Targueta
+R
+780
+837.0
+405.5
+
+i
+apto
+48218
+Alexandre Babilone Fonseca
+0
+6
+10
+606.9
+9066
+S
+11
+
+i
+apto
+77160
+Wagner Klippel Dominicini
+7
+6
+2
+170.8
+407
+N
+11
+
+i
+trapez
+44872
+Salime Abib Lima Saade
+G
+8751
+892.9
+279.5
+609.1
+
+i
+retang
+48485
+Barbara Binda Nicchio
+R
+4258
+830.8
+701.6
+
+i
+trapez
+48508
+Antonio Franzosi
+R
+2302
+446.8
+97.3
+153.5
+
+i
+retang
+54795
+Filipe Martinho De Moraes
+A
+6024
+506.2
+389.0
+
+i
+trapez
+44830
+Rafael Schneider Cogo
+R
+1589
+307.9
+200.4
+264.6
+
+i
+triang
+45069
+Yargo Pezzin Souza
+G
+9336
+508.3
+339.7
+
+i
+triang
+44448
+Ricardo Guerini Lemos
+R
+9145
+464.7
+22.5
+
+i
+apto
+64532
+Pedro Salim Carone
+4
+7
+4
+23.5
+1348
+N
+10
+
+i
+retang
+48234
+Barbara Pereira Silvestre
+R
+8076
+708.4
+255.7
+
+i
+trapez
+56866
+Sathya Ananda Braguinia Almeida Carnielli
+R
+7193
+47.4
+664.4
+486.6
+
+i
+triang
+45293
+Mindszenty Junior Pedroza Garozi
+G
+9246
+355.7
+981.2
+
+i
+retang
+56834
+Renato Gripp Chaves
+A
+8112
+625.0
+694.3
+
+i
+triang
+49032
+Matheus Sobreira Binoti
+G
+3923
+949.7
+628.6
+
+i
+retang
+48487
+Carolina Cortez Pinheiro
+A
+9542
+457.7
+943.9
+
+i
+casa
+93239
+Enzo Salviato Mameri
+7
+9
+1
+724.7
+883
+324.8
+6118
+
+i
+triang
+58955
+Dahlen Siqueira Silva
+R
+7136
+349.7
+633.1
+
+i
+trapez
+48507
+Andressa Silva Anyzewski
+A
+2080
+581.3
+222.1
+8.2
+
+i
+triang
+40954
+Gustavo Silva Alves
+G
+2864
+638.9
+832.0
+
+i
+retang
+58979
+Artur Dalla Cypreste
+G
+3325
+173.9
+478.1
+
+i
+trapez
+59005
+Camilla Fernandes Timoteo
+G
+4648
+368.3
+778.5
+167.4
+
+i
+apto
+55120
+Gustavo Soares Martins
+9
+4
+1
+504.6
+385
+N
+1
+
+i
+casa
+48248
+Cristal Ramalho Antunes
+1
+1
+1
+439.4
+3272
+85.6
+8699
+
+a
+trapez
+59005
+Camilla Fernandes Timoteo
+R
+977
+36.9
+621.8
+657.1
+
+a
+retang
+48218
+Alexandre Babilone Fonseca
+A
+745
+147.6
+555.5
+
+a
+retang
+56866
+Sathya Ananda Braguinia Almeida Carnielli
+A
+2986
+919.9
+298.6
+
+a
+retang
+45293
+Mindszenty Junior Pedroza Garozi
+A
+6385
+801.7
+4.0
+
+e
+83142
+
+e
+56866
+
+e
+58955
+
+e
+44493
+
+e
+41342

@@ -15,9 +15,8 @@ typedef struct {
     int k;
  } Espec;
 
-imovel* init_item();
 
-List<imovel>* le_catalogo(string caminho);
+void le_catalogo(string caminho);
 
 void le_atual(string caminho, List<imovel>*);
 

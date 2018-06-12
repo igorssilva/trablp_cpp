@@ -1,0 +1,29 @@
+triang
+44471
+Ramon De Oliveira Rossi
+R
+3617
+976.9
+351.0
+
+apto
+93239
+Enzo Salviato Mameri
+5
+2
+1
+35.4
+9866
+S
+3
+
+casa
+48408
+Cassio Pretti
+2
+10
+1
+987.7
+2992
+173.3
+944

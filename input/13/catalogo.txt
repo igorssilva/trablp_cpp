@@ -1,0 +1,116 @@
+trapez
+58955
+Dahlen Siqueira Silva
+R
+7682
+937.7
+499.2
+822.2
+
+retang
+66343
+Marianne De Paula Mattos
+A
+1110
+190.5
+968.6
+
+retang
+56821
+Sara Dos Santos Jorge
+G
+4017
+746.6
+709.4
+
+apto
+45097
+Rodrigo Antonio Toffoli
+1
+10
+2
+109.6
+8031
+N
+18
+
+apto
+66339
+Marlon Colodetti Garcia
+9
+8
+6
+786.7
+4549
+N
+11
+
+retang
+44471
+Ramon De Oliveira Rossi
+A
+7736
+896.2
+797.9
+
+casa
+44493
+Sabrina Queiroz Silveira
+9
+7
+9
+43.8
+214
+957.5
+9201
+
+triang
+48255
+Alanderson Dos Reis Monico
+G
+2071
+679.6
+518.1
+
+triang
+75757
+Iza Piana
+R
+3630
+72.4
+203.7
+
+retang
+41320
+Hannah Chicralla Alvarez
+A
+2058
+520.2
+428.0
+
+casa
+59005
+Camilla Fernandes Timoteo
+3
+4
+0
+324.7
+7016
+212.3
+5342
+
+retang
+42205
+Hugo Carvalho De Paula
+A
+5859
+389.0
+91.4
+
+triang
+42339
+Jordana Sartori Tartaglia
+G
+6378
+807.3
+425.8

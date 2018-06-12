@@ -1,0 +1,63 @@
+i
+triang
+55120
+Gustavo Soares Martins
+A
+1955
+448.3
+277.0
+
+i
+apto
+41636
+Janaina Do Socorro Sarmanho Muller
+5
+7
+4
+631.5
+2103
+S
+20
+
+i
+casa
+44448
+Ricardo Guerini Lemos
+7
+9
+5
+154.0
+5618
+342.9
+6901
+
+i
+casa
+44885
+Thais Klein Fornazelli Martins
+2
+5
+7
+115.0
+2603
+675.0
+3313
+
+i
+retang
+58964
+Brunella Maitam Paris
+A
+1917
+618.7
+473.7
+
+i
+trapez
+87163
+Nayara Do Amaral Carpes
+A
+3723
+37.0
+819.2
+627.0
