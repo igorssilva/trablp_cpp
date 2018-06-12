@@ -5,7 +5,8 @@ using std::string;
 #ifndef fileio_h
 #define fileio_h
 
-typedef struct { 
+typedef struct
+{
     int perc_imoveis_caros;
     int perc_menores_arg;
     float area_limite;
@@ -13,12 +14,11 @@ typedef struct {
     int i;
     int j;
     int k;
- } Espec;
+} Espec;
 
+List<imovel> &le_catalogo(string caminho);
 
-void le_catalogo(string caminho);
-
-void le_atual(string caminho, List<imovel>*);
+void le_atual(string caminho, List<imovel> &imoveis);
 
 Espec le_espec(string caminho);
 

@@ -1,5 +1,6 @@
 #include <string>
 #include "residencia.h"
+#include <functional>
 using std::string;
 #ifndef casa_h
 #define casa_h
@@ -21,7 +22,7 @@ class casa : public residencia
          float areaLivre,
          int precoMetroQuadradoAreaLivre);
          
-    static auto isCasaAreaPreco(float area_limite, float preco_limite);
+    std::function<bool(const imovel& i)> isCasaAreaPreco(float area_limite, float preco_limite);
     float preco() const;
     float area() const;
 };

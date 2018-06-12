@@ -12,7 +12,7 @@ int imovel::getId() const
 }
 
 //Funcao para ordenar o imovel por preço
-bool imovel::orderByPreco(const imovel &item, const imovel &outro)
+bool orderByPreco(const imovel &item, const imovel &outro)
 {
     float precoItem = item.preco();
     float precoOutro = outro.preco();
