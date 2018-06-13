@@ -17,7 +17,7 @@ struct Node
 		: value(object), next(next_node), prev(prev_node) {}
 
   private:
-	T value;
+	T* value;
 	Node *next;
 	Node *prev;
 
@@ -188,7 +188,7 @@ void List<T>::remove(const T &object)
 				next_node->prev = n->prev;
 			}
 		}
-
+		delete n->value;
 		delete n;
 		this->sz--;
 	}
@@ -200,7 +200,7 @@ void List<T>::changeValue(const T &object)
 	Node<T> *n = this->find(object);
 	if (n != nullptr)
 	{
-		delete &(n->value);
+		delete n->value;
 		n->value = object;
 	}
 }

@@ -4,6 +4,7 @@
 #include <vector>
 #include <locale>
 #include <sstream>
+#include <iostream>
 
 /*Imports do projeto*/
 #include "fileio.h"
@@ -15,30 +16,22 @@
 #include "trapezio.h"
 
 /*using function name*/
+using std::endl;
 using std::getline;
 using std::ifstream;
 using std::istringstream;
+using std::stof;
+using std::stoi;
 using std::vector;
-using std::endl;
 
-int strToInt(string str)
+imovel *init_item(string tipo, ifstream *in)
 {
-    return std::stoi(str);
-}
-
-float strToFloat(string str)
-{
-    return std::stof(str);
-}
-
-imovel init_item(string tipo, ifstream *in)
-{
-    imovel im;
+    imovel *im;
     string line;
 
     //Le id e convert para int atribuindo a variavel
     getline(*in, line);
-    int id = strToInt(line);
+    int id = stoi(line);
 
     //le nome e atribui a variavel
     getline(*in, line);
@@ -48,52 +41,52 @@ imovel init_item(string tipo, ifstream *in)
     {
         //le numero de quartos
         getline(*in, line);
-        int quartos = strToInt(line);
+        int quartos = stoi(line);
 
         //le numero de vagas
         getline(*in, line);
-        int vagas = strToInt(line);
+        int vagas = stoi(line);
 
-        if (tipo == "casa")
+        if (!tipo.compare("casa"))
         {
             //le numero de pavimentos
             getline(*in, line);
-            int numeroPavimentos = strToInt(line);
+            int numeroPavimentos = stoi(line);
 
             //le area do pavimento
             getline(*in, line);
-            float areaPavimento = strToFloat(line);
+            float areaPavimento = stof(line);
 
             //le o preco por metro quadrado de pavimento
             getline(*in, line);
-            int precoMetroQuadradoAreaPavimento = strToInt(line);
+            int precoMetroQuadradoAreaPavimento = stoi(line);
 
             //le a area livre
             getline(*in, line);
-            float areaLivre = strToFloat(line);
+            float areaLivre = stof(line);
 
             //le o preco por metro quadrado livre
             getline(*in, line);
-            int precoMetroQuadradoAreaLivre = strToInt(line);
+            int precoMetroQuadradoAreaLivre = stoi(line);
 
             //upcast de casa para imovel
-            im = casa(id, nome, quartos, vagas, numeroPavimentos, areaPavimento, precoMetroQuadradoAreaPavimento, areaLivre, precoMetroQuadradoAreaLivre);
+            im = new casa(id, nome, quartos, vagas, numeroPavimentos, areaPavimento, precoMetroQuadradoAreaPavimento, areaLivre, precoMetroQuadradoAreaLivre);
         }
         else
         {
-            if (tipo == "apto")
+            if (!tipo.compare("apto"))
             {
                 //le o andar do apartamento
                 getline(*in, line);
-                int andar = strToInt(line);
+                int andar = stoi(line);
 
                 //le a area construida do apartamento
                 getline(*in, line);
-                float areaConstruida = strToFloat(line);
+                float areaConstruida = stof(line);
 
                 //le o preco por metro quadrado construido
                 getline(*in, line);
-                int precoMetroQuadradoAreaConstruida = strToInt(line);
+                int precoMetroQuadradoAreaConstruida = stoi(line);
 
                 //le se contem area de lazer
                 getline(*in, line);
@@ -101,35 +94,36 @@ imovel init_item(string tipo, ifstream *in)
 
                 //le a quantidade de andares
                 getline(*in, line);
-                int numeroAndares = strToInt(line);
+                int numeroAndares = stoi(line);
 
                 //upcast de apartamento para imovel
-                im = apartamento(id, nome, quartos, vagas, andar, areaConstruida, precoMetroQuadradoAreaConstruida, lazer, numeroAndares);
+                im =new apartamento(id, nome, quartos, vagas, andar, areaConstruida, precoMetroQuadradoAreaConstruida, lazer, numeroAndares);
             }
         }
     }
     else
     {
+
         //le o tipo de solo do terreno
         getline(*in, line);
         string solo = line;
 
         //le o preco por metro quadrado do terreno
         getline(*in, line);
-        int precoMtQd = strToInt(line);
+        int precoMtQd = stoi(line);
 
         if (tipo == "triang")
         {
             //le a base do terreno triangular
             getline(*in, line);
-            float base = strToFloat(line);
+            float base = stof(line);
 
             //le a altura do terreno triangular
             getline(*in, line);
-            float altura = strToFloat(line);
+            float altura = stof(line);
 
             //upcast de triangulo para imovel
-            im = triangulo(id, nome, solo, precoMtQd, base, altura);
+            im =new triangulo(id, nome, solo, precoMtQd, base, altura);
         }
         else
         {
@@ -137,18 +131,18 @@ imovel init_item(string tipo, ifstream *in)
             {
                 //le a base1 do terreno trapezodial
                 getline(*in, line);
-                float base1 = strToFloat(line);
+                float base1 = stof(line);
 
                 //le a base2 do terreno trapezodial
                 getline(*in, line);
-                float base2 = strToFloat(line);
+                float base2 = stof(line);
 
                 //le a altura do terreno trapezodial
                 getline(*in, line);
-                float altura = strToFloat(line);
+                float altura = stof(line);
 
                 //upcast de trapezio para imovel
-                im = trapezio(id, nome, solo, precoMtQd, base1, base2, altura);
+                im =new trapezio(id, nome, solo, precoMtQd, base1, base2, altura);
             }
             else
             {
@@ -156,14 +150,14 @@ imovel init_item(string tipo, ifstream *in)
                 {
                     //le o lado1 do terreno retangular
                     getline(*in, line);
-                    float lado1 = strToFloat(line);
+                    float lado1 = stof(line);
 
                     //le o lado2 do terreno retangular
                     getline(*in, line);
-                    float lado2 = strToFloat(line);
+                    float lado2 = stof(line);
 
                     //upcast de retangulo para imovel
-                    im = retangulo(id, nome, solo, precoMtQd, lado1, lado2);
+                    im =new retangulo(id, nome, solo, precoMtQd, lado1, lado2);
                 }
             }
         }
@@ -182,9 +176,12 @@ List<imovel> &le_catalogo(string caminho)
     List<imovel> *imoveis = new List<imovel>();
     while (getline(in, line))
     {
-        imovel im = init_item(line, &in);
+        line.erase(std::remove(line.begin(), line.end(), '\r'), line.end());
+        imovel* im = init_item(line, &in);
 
-        imoveis->insert(im);
+        std::cout << im->getId() << ": " << im->preco() << '\n';
+
+        imoveis->insert(*im);
 
         //pula a linha vazia
         getline(in, line);
@@ -227,7 +224,7 @@ void le_atual(string caminho, List<imovel> &imoveis)
                 if (line == "e")
                 {
                     getline(in, line);
-                    imovel im = imovel(strToInt(line), "");
+                    imovel im = imovel(stoi(line), "");
                     imoveis.remove(im);
                 }
             }
@@ -248,25 +245,25 @@ Espec le_espec(string caminho)
     std::string line;
 
     getline(in, line);
-    int perc_imoveis_caros = strToInt(line);
+    int perc_imoveis_caros = stoi(line);
 
     getline(in, line);
-    int perc_menores_arg = strToInt(line);
+    int perc_menores_arg = stoi(line);
 
     getline(in, line);
-    float area_limite = strToFloat(line);
+    float area_limite = stof(line);
 
     getline(in, line);
-    float preco_limite = strToFloat(line);
+    float preco_limite = stof(line);
 
     getline(in, line);
-    int i = strToInt(line);
+    int i = stoi(line);
 
     getline(in, line);
-    int j = strToInt(line);
+    int j = stoi(line);
 
     getline(in, line);
-    int k = strToInt(line);
+    int k = stoi(line);
 
     in.close();
     Espec e = {
