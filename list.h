@@ -70,7 +70,8 @@ struct List
 	List<T> *filter(std::function<bool(const T &)> fn);
 
 	// retorna uma copia de uma parte da lista
-	List<T> *slice(int b = 0, int e = sz);
+	List<T> *slice(int b);
+	List<T> *slice(int b, int e);
 
 	// ordena a lista de acordo com a função passada
 	void sort(std::function<bool(const T &, const T &)> fn);
@@ -280,7 +281,39 @@ List<T> *List<T>::filter(std::function<bool(const T &)> fn)
 }
 
 template <class T>
-List<T> *List<T>::slice(int b = 0, int e = this->sz)
+List<T> *List<T>::slice(int b)
+{
+
+	List<T> *l = new List<T>();
+
+	if (empty())
+	{
+		return l;
+	}
+
+	if (b > sz)
+	{
+		return l;
+	}
+
+	Node<T> *n = head;
+	int i = 0;
+	while (i < b)
+	{
+		n = n->next;
+		i++;
+	}
+
+	for (n; n != nullptr; n = n->next)
+	{
+		l->insert(n->value);
+	}
+
+	return l;
+}
+
+template <class T>
+List<T> *List<T>::slice(int b, int e)
 {
 	List<T> *l = new List<T>();
 

@@ -19,8 +19,10 @@ int main(int argc, char **argv)
     
     Espec e = le_espec(inputFolder + "espec.txt");
 
+    List<imovel*>* imoveis_caros = imovel::listImoveisCaros(imoveis, e.perc_imoveis_caros);
+
+    imoveis_caros->apply(printPreco);
+
     delete imoveis;
-    imoveis = nullptr;
-    cout << "fim\n";
-    return 0;
+        return 0;
 }
