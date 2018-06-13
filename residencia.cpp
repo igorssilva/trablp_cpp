@@ -1,7 +1,7 @@
 #include "residencia.h"
 
 
-residencia::residencia(int id, string nome, int quartos, int vagas):imovel(id, nome)
+residencia::residencia(int id, string nome, int quartos, int vagas) : imovel(id, nome)
 {
     this->quartos = quartos;
     this->vagas = vagas;

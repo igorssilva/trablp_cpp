@@ -16,9 +16,9 @@ typedef struct
     int k;
 } Espec;
 
-List<imovel> &le_catalogo(string caminho);
+List<imovel*> *le_catalogo(string caminho);
 
-void le_atual(string caminho, List<imovel> &imoveis);
+void le_atual(string caminho, List<imovel*> *imoveis);
 
 Espec le_espec(string caminho);
 

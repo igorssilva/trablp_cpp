@@ -1,4 +1,5 @@
 #include <string>
+#include "list.h"
 using std::string;
 #ifndef imovel_h
 #define imovel_h
@@ -17,7 +18,7 @@ public:
   };
   imovel(int id, string nome);
   int getId() const;
-  //bool orderByPreco(const imovel &item, const imovel &outro);
+  static List<imovel*>* listImoveisCaros(List<imovel*> *imoveis, int perc_imoveis_caros);
   virtual float preco() const { return 0; };
   virtual float area() const { return 0; };
   bool operator==(const imovel &i) const;

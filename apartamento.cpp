@@ -5,7 +5,7 @@ apartamento::apartamento(int id, string nome, int quartos, int vagas,
                          float areaConstruida,
                          int precoMetroQuadradoAreaConstruida,
                          bool lazer,
-                         int numeroAndares) : residencia(id, nome, quartos, vagas)
+                         int numeroAndares) : residencia(id,nome, quartos, vagas)
 {
     this->andar = andar;
     this->areaConstruida = areaConstruida;

@@ -17,7 +17,7 @@ struct Node
 		: value(object), next(next_node), prev(prev_node) {}
 
   private:
-	T* value;
+	T value;
 	Node *next;
 	Node *prev;
 
@@ -54,6 +54,9 @@ struct List
 	// remove um objeto
 	void remove(const T &object);
 
+	//remove um objeto
+	void remove(Node<T> *n);
+
 	// Encontra o objeto na lista
 	Node<T> *find(const T &object);
 
@@ -66,15 +69,25 @@ struct List
 	// filtra a lista pelo predicado passado
 	List<T> *filter(std::function<bool(const T &)> fn);
 
-		// the invariant - must be always true for a well-formed List<>
-		// the first member function that we write for any non-trivial class
-		bool valid() const;
+	// retorna uma copia de uma parte da lista
+	List<T> *slice(int b = 0, int e = sz);
+
+	// ordena a lista de acordo com a função passada
+	void sort(std::function<bool(const T &, const T &)> fn);
+
+	void apply(std::function<void(const T &)> fn);
+	// the invariant - must be always true for a well-formed List<>
+	// the first member function that we write for any non-trivial class
+	bool valid() const;
 	inline void assert_invariant() const { assert(valid()); }
 
   private:
 	Node<T> *head;
 	Node<T> *tail;
 	std::size_t sz; // number of nodes
+	void swap(Node<T> *a, Node<T> *b);
+	void _quickSort(Node<T> *l, Node<T> *h, std::function<bool(const T &, const T &)> fn);
+	Node<T> *partition(Node<T> *l, Node<T> *h, std::function<bool(const T &, const T &)> fn);
 };
 
 template <class T>
@@ -132,6 +145,7 @@ void List<T>::pop_back()
 
 	if (size() == 1)
 	{
+		delete head->value;
 		delete head;
 		head = tail = nullptr;
 	}
@@ -139,6 +153,7 @@ void List<T>::pop_back()
 	else
 	{
 		tail = tail->prev;
+		delete tail->next->value;
 		delete tail->next;
 		tail->next = nullptr;
 	}
@@ -151,8 +166,8 @@ void List<T>::pop_back()
 template <class T>
 Node<T> *List<T>::find(const T &object)
 {
-	Node<T> *n;
-	for (n = this->head; n != nullptr; n = n->next)
+	Node<T> *n = nullptr;
+	for (n = head; n != nullptr; n = n->next)
 	{
 		if (n->value == object)
 		{
@@ -166,19 +181,20 @@ Node<T> *List<T>::find(const T &object)
 template <class T>
 void List<T>::remove(const T &object)
 {
-	Node<T> *n = this->find(object);
+	assert_invariant();
+	Node<T> *n = find(object);
 
 	if (n != nullptr)
 	{
-		if (n == this->head)
+		if (n == head)
 		{
-			this->head = n->next;
+			head = n->next;
 		}
 		else
 		{
-			if (n == this->tail)
+			if (n == tail)
 			{
-				this->tail = n->prev;
+				tail = n->prev;
 			}
 			else
 			{
@@ -190,28 +206,69 @@ void List<T>::remove(const T &object)
 		}
 		delete n->value;
 		delete n;
-		this->sz--;
+		sz--;
 	}
+
+	assert_invariant();
+}
+
+template <class T>
+void List<T>::remove(Node<T> *n)
+{
+	assert_invariant();
+	if (n != nullptr)
+	{
+		if (n == head)
+		{
+			head = n->next;
+		}
+		else
+		{
+			if (n == tail)
+			{
+				tail = n->prev;
+			}
+			else
+			{
+				Node<T> *prev_node = n->prev;
+				Node<T> *next_node = n->next;
+				prev_node->next = n->next;
+				next_node->prev = n->prev;
+			}
+		}
+		delete n->value;
+		delete n;
+		sz--;
+	}
+
+	assert_invariant();
 }
 
 template <class T>
 void List<T>::changeValue(const T &object)
 {
+
+	assert_invariant();
 	Node<T> *n = this->find(object);
 	if (n != nullptr)
 	{
-		delete n->value;
-		n->value = object;
+		//delete n->value;
+		//n->value = object;
+		this->remove(n);
+		this->insert(object);
 	}
+
+	assert_invariant();
 }
 
 template <class T>
 List<T> *List<T>::filter(std::function<bool(const T &)> fn)
 {
-	List<T> *novo = new List<T>();
-	Node<T> *n;
 
-	for (n = this->head; n != nullptr; n = n->next)
+	List<T> *novo = new List<T>();
+	Node<T> *n = nullptr;
+
+	for (n = head; n != nullptr; n = n->next)
 	{
 		if (fn(n->value))
 		{
@@ -220,6 +277,121 @@ List<T> *List<T>::filter(std::function<bool(const T &)> fn)
 	}
 
 	return novo;
+}
+
+template <class T>
+List<T> *List<T>::slice(int b = 0, int e = this->sz)
+{
+	List<T> *l = new List<T>();
+
+	if (empty())
+	{
+		return l;
+	}
+
+	Node<T> *n = nullptr;
+	int i = 0;
+	for (n = head; i < b && n != nullptr; n = n->next)
+	{
+	}
+
+	int j = e - b;
+
+	for (n; j < e && n != nullptr; n = n->next)
+	{
+		l->insert(n->value);
+	}
+
+	return l;
+}
+
+template <class T>
+//Troca o elemento a e b de lugar
+void List<T>::swap(Node<T> *a, Node<T> *b)
+{
+	if (a == b)
+	{
+		return;
+	}
+
+	T temp = a->value;
+	a->value = b->value;
+	b->value = temp;
+}
+
+template <class T>
+/*
+	Considera o último elemento como pivô, coloca o elemento pivô em seu
+	posição correta na lista ordenada, e coloca todos os menores (menores que
+	pivô) para a esquerda do pivô e todos os elementos maiores para a direita do pivô
+*/
+Node<T> *List<T>::partition(Node<T> *l, Node<T> *h, std::function<bool(const T &, const T &)> fn)
+{
+	// Seleciona o pivo como o elemento h
+	T x = h->value;
+
+	// 1--
+	Node<T> *i = l->prev;
+	Node<T> *j;
+	for (j = l; j != h; j = j->next)
+	{
+
+		if (fn(j->value, x))
+		{
+			// i++
+			if (i == nullptr)
+			{
+				i = l;
+			}
+			else
+			{
+				i = i->next;
+			}
+
+			swap(i, j);
+		}
+	}
+	// i++
+	if (i == nullptr)
+	{
+		i = l;
+	}
+	else
+	{
+		i = i->next;
+	}
+	swap(i, h);
+	return i;
+}
+
+template <class T>
+//Ordena a lista de acordo com a comparação passada por função
+void List<T>::_quickSort(Node<T> *l, Node<T> *h, std::function<bool(const T &, const T &)> fn)
+{
+
+	if (h != nullptr && l != h && l != h->next)
+	{
+		Node<T> *p = partition(l, h, fn);
+		_quickSort(l, p->prev, fn);
+		_quickSort(p->next, h, fn);
+	}
+}
+
+template <class T>
+//Funcao chamada para ordenar
+void List<T>::sort(std::function<bool(const T &, const T &)> fn)
+{
+	_quickSort(head, tail, fn);
+}
+
+template <class T>
+void List<T>::apply(std::function<void(const T &)> fn)
+{
+	Node<T> *n = nullptr;
+	for (n = head; n != nullptr; n = n->next)
+	{
+		fn(n->value);
+	}
 }
 
 #endif /* LIST_H */
