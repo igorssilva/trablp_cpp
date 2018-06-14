@@ -13,6 +13,7 @@ class residencia : public imovel
   public:
     residencia(int id, string nome, int quartos, int vagas);
     bool orderByQuarto(const residencia &item, const residencia &outro) const;
+    imovel & operator=(const imovel & object);
 };
 
 #endif

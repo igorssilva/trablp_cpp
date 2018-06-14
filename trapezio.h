@@ -15,6 +15,7 @@ class trapezio : public terreno
         trapezio(int id, string nome, string solo, int precoMqQd, float base1, float base2, float altura);
         float preco() const;
         float area() const;    
+        imovel & operator=(const imovel & object);
 };
 
 #endif

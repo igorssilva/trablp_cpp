@@ -6,21 +6,22 @@ using std::string;
 
 class apartamento : public residencia
 {
-  private:
-    int andar;
-    float areaConstruida;
-    int precoMetroQuadradoAreaConstruida;
-    bool lazer;
-    int numeroAndares;
+private:
+  int andar;
+  float areaConstruida;
+  int precoMetroQuadradoAreaConstruida;
+  bool lazer;
+  int numeroAndares;
 
-  public:
-    apartamento(int id, string nome, int quartos, int vagas,
-         int andar,
-         float areaConstruida,
-         int precoMetroQuadradoAreaConstruida,
-         bool lazer,
-         int numeroAndares);
-    float preco() const;
+public:
+  apartamento(int id, string nome, int quartos, int vagas,
+              int andar,
+              float areaConstruida,
+              int precoMetroQuadradoAreaConstruida,
+              bool lazer,
+              int numeroAndares);
+  float preco() const;
+  imovel &operator=(const imovel &object);
 };
 
 #endif

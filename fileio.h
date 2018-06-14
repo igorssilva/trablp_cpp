@@ -4,7 +4,6 @@
 using std::string;
 #ifndef fileio_h
 #define fileio_h
-
 typedef struct
 {
     int perc_imoveis_caros;
@@ -16,12 +15,17 @@ typedef struct
     int k;
 } Espec;
 
-List<imovel*> *le_catalogo(string caminho);
 
-void le_atual(string caminho, List<imovel*> *imoveis);
+typedef std::shared_ptr<List<imovelPtr>> ListPtr;
+
+ListPtr le_catalogo(string caminho);
+
+void le_atual(string caminho, ListPtr &imoveis);
 
 Espec le_espec(string caminho);
 
 void esc_string(string caminho, string str);
+
+
 
 #endif

@@ -8,38 +8,46 @@ imovel::imovel(int id, string nome)
 
 int imovel::getId() const
 {
-    return this->id;
+    return id;
 }
 
 //Funcao para ordenar o imovel por preço
-bool orderByPreco(const imovel* item, const imovel* outro)
+bool orderByPreco(const imovel &item, const imovel &outro)
 {
-    float precoItem = item->preco();
-    float precoOutro = outro->preco();
+    float precoItem = item.preco();
+    float precoOutro = outro.preco();
 
     if (precoItem == precoOutro)
     {
-        return item->getId() < outro->getId();
+        return item.getId() < outro.getId();
     }
 
     return precoItem <= precoOutro;
 }
 
-List<imovel*>* imovel::listImoveisCaros(List<imovel*> *imoveis, int perc_imoveis_caros)
+List<imovelPtr> &imovel::listImoveisCaros(List<imovelPtr> &imoveis, int perc_imoveis_caros)
 {
-    List<imovel*> *list = new List<imovel*>();
+    List<imovelPtr> *list = new List<imovelPtr>();
 
-    int tam = imoveis->size() - (int)((float)perc_imoveis_caros/100*imoveis->size());
-    
-    imoveis->sort(orderByPreco);
+    int tam = imoveis.size() - (int)((float)perc_imoveis_caros / 100 * imoveis.size());
 
-    list = imoveis->slice(tam);
+    //imoveis.sort(orderByPreco);
 
-    return list;
+    list = imoveis.slice(tam);
+
+    return *list;
+}
+
+bool imovel::operator==(const imovel &outro) const
+{
+    return id == outro.getId();
 }
 
 
-bool imovel::operator==(const imovel &i) const
+imovel & imovel::operator=(const imovel &object)
 {
-    return this->id == (&i)->id;
+    this->id = object.id;
+    this->nome = object.nome;
+    return *this;
 }
+

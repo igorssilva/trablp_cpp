@@ -15,6 +15,7 @@ class terreno : public imovel
     static bool isTerrenoArgiloso(const imovel &i);
     bool orderByArea(const terreno &item, const terreno &outro) const;
     float preco() const;
+    imovel & operator=(const imovel & object);
 };
 
 #endif

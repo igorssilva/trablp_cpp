@@ -3,6 +3,7 @@
 
 #include <cassert>
 #include <functional>
+#include <memory>
 
 // declara Lista
 template <class T>
@@ -59,6 +60,11 @@ struct List
 
 	// Encontra o objeto na lista
 	Node<T> *find(const T &object);
+
+	inline T val(const T &object)
+	{
+		return find(object)->value;
+	}
 
 	// altera o valor de um nó da lista
 	void changeValue(const T &object);
@@ -146,15 +152,14 @@ void List<T>::pop_back()
 
 	if (size() == 1)
 	{
-		delete head->value;
 		delete head;
+		
 		head = tail = nullptr;
 	}
 
 	else
 	{
 		tail = tail->prev;
-		delete tail->next->value;
 		delete tail->next;
 		tail->next = nullptr;
 	}
@@ -170,7 +175,7 @@ Node<T> *List<T>::find(const T &object)
 	Node<T> *n = nullptr;
 	for (n = head; n != nullptr; n = n->next)
 	{
-		if (n->value == object)
+		if (*(n->value) == *object)
 		{
 			return n;
 		}
@@ -205,7 +210,6 @@ void List<T>::remove(const T &object)
 				next_node->prev = n->prev;
 			}
 		}
-		delete n->value;
 		delete n;
 		sz--;
 	}
@@ -253,10 +257,9 @@ void List<T>::changeValue(const T &object)
 	Node<T> *n = this->find(object);
 	if (n != nullptr)
 	{
-		//delete n->value;
-		//n->value = object;
-		this->remove(n);
-		this->insert(object);
+		n->value = object;
+		//this->remove(n);
+		//this->insert(object);
 	}
 
 	assert_invariant();

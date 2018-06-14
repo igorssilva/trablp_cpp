@@ -14,6 +14,7 @@ class triangulo : public terreno
     triangulo(int id, string nome, string solo, int precoMqQd, float base, float altura);
     float preco() const;
     float area() const;
+    imovel & operator=(const imovel & object);
 };
 
 #endif

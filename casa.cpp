@@ -14,13 +14,11 @@ casa::casa(int id, string nome, int quartos, int vagas,
     this->precoMetroQuadradoAreaLivre = precoMetroQuadradoAreaLivre;
 }
 
-
-
 std::function<bool(const imovel &i)> casa::isCasaAreaPreco(float area_limite, float preco_limite)
 {
-    std::function<bool(const imovel &i)> clos = [area_limite, preco_limite](const imovel &i) 
-    { 
-        if(const casa* c = dynamic_cast<const casa*>(&i)){
+    std::function<bool(const imovel &i)> clos = [area_limite, preco_limite](const imovel &i) {
+        if (const casa *c = dynamic_cast<const casa *>(&i))
+        {
             return c->area() > area_limite && c->preco() < preco_limite;
         }
 
@@ -37,4 +35,20 @@ float casa::preco() const
 float casa::area() const
 {
     return this->precoMetroQuadradoAreaPavimento * this->areaPavimento;
+}
+
+imovel &casa::operator=(const imovel &object)
+{
+    residencia::operator=(object);
+    const casa *cas = dynamic_cast<const casa *>(&object);
+    if (cas)
+    {
+        this->numeroPavimentos = cas->numeroPavimentos;
+        this->areaPavimento = cas->areaPavimento;
+        this->precoMetroQuadradoAreaPavimento = cas->precoMetroQuadradoAreaPavimento;
+        this->areaLivre = cas->areaLivre;
+        this->precoMetroQuadradoAreaLivre = cas->precoMetroQuadradoAreaLivre;
+    }
+
+    return *this;
 }

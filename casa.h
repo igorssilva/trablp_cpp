@@ -25,6 +25,8 @@ class casa : public residencia
     std::function<bool(const imovel& i)> isCasaAreaPreco(float area_limite, float preco_limite);
     float preco() const;
     float area() const;
+
+    imovel & operator=(const imovel & object);
 };
 
 #endif
