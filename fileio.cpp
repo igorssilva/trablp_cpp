@@ -1,30 +1,22 @@
 /*Imports biblioteca padrão*/
 #include <fstream>
 #include <algorithm>
-#include <vector>
-#include <locale>
 #include <sstream>
 #include <iostream>
-#include <stdio.h>
-#include <iomanip> // setprecision
 #include <memory>
 
 /*Imports do projeto*/
 #include "fileio.h"
-#include "imovel.h"
-#include "casa.h"
 #include "apartamento.h"
-#include "triangulo.h"
+#include "casa.h"
 #include "retangulo.h"
 #include "trapezio.h"
+#include "triangulo.h"
 
 /*using function name*/
 using std::endl;
 using std::ifstream;
-using std::istringstream;
 using std::stoi;
-using std::stringstream;
-using std::vector;
 
 string getline(ifstream *in)
 {
@@ -35,15 +27,9 @@ string getline(ifstream *in)
     return str;
 }
 
-void printPreco(const imovel *i)
-{
-    float p = i->preco();
-    printf("id: %d, preco: %.2f\n", i->getId(), p);
-}
+
 float strtof(string line)
 {
-    //float n = std::stof(line);
-    // float nearest = roundf(n * 10) / 10; /* Result: 37.78 */
     return std::stof(line);
 }
 
@@ -93,7 +79,8 @@ imovelPtr init_item(string tipo, ifstream *in)
             int precoMetroQuadradoAreaLivre = stoi(line);
 
             //upcast de casa para imovel
-            im = std::make_shared<casa>(new casa(id, nome, quartos, vagas, numeroPavimentos, areaPavimento, precoMetroQuadradoAreaPavimento, areaLivre, precoMetroQuadradoAreaLivre));
+            casa *c = new casa(id, nome, quartos, vagas, numeroPavimentos, areaPavimento, precoMetroQuadradoAreaPavimento, areaLivre, precoMetroQuadradoAreaLivre);
+            im = imovelPtr(c);
         }
         else
         {
@@ -106,7 +93,6 @@ imovelPtr init_item(string tipo, ifstream *in)
                 //le a area construida do apartamento
                 line = getline(in);
                 float areaConstruida = strtof(line);
-                printf("area %f\n", areaConstruida);
 
                 //le o preco por metro quadrado construido
                 line = getline(in);
@@ -121,7 +107,8 @@ imovelPtr init_item(string tipo, ifstream *in)
                 int numeroAndares = stoi(line);
 
                 //upcast de apartamento para imovel
-                im = std::make_shared<apartamento>(new apartamento(id, nome, quartos, vagas, andar, areaConstruida, precoMetroQuadradoAreaConstruida, lazer, numeroAndares));
+                apartamento *apto = new apartamento(id, nome, quartos, vagas, andar, areaConstruida, precoMetroQuadradoAreaConstruida, lazer, numeroAndares);
+                im = imovelPtr(apto);
             }
         }
     }
@@ -147,7 +134,8 @@ imovelPtr init_item(string tipo, ifstream *in)
             float altura = strtof(line);
 
             //upcast de triangulo para imovel
-            im = std::make_shared<triangulo>(new triangulo(id, nome, solo, precoMtQd, base, altura));
+            triangulo *triang = new triangulo(id, nome, solo, precoMtQd, base, altura);
+            im = imovelPtr(triang);
         }
         else
         {
@@ -166,7 +154,8 @@ imovelPtr init_item(string tipo, ifstream *in)
                 float altura = strtof(line);
 
                 //upcast de trapezio para imovel
-                im = std::make_shared<trapezio>(new trapezio(id, nome, solo, precoMtQd, base1, base2, altura));
+                trapezio *trapez = new trapezio(id, nome, solo, precoMtQd, base1, base2, altura);
+                im = imovelPtr(trapez);
             }
             else
             {
@@ -181,7 +170,8 @@ imovelPtr init_item(string tipo, ifstream *in)
                     float lado2 = strtof(line);
 
                     //upcast de retangulo para imovel
-                    im = std::make_shared<retangulo>(new retangulo(id, nome, solo, precoMtQd, lado1, lado2));
+                    retangulo *retang = new retangulo(id, nome, solo, precoMtQd, lado1, lado2);
+                    im = imovelPtr(retang);
                 }
             }
         }
@@ -196,8 +186,9 @@ ListPtr le_catalogo(string caminho)
     ifstream in;
     in.open(caminho);
 
+    //le a primeira linha com tipo
     std::string line = getline(&in);
-    ListPtr imoveis = ListPtr();
+    ListPtr imoveis = ListPtr(new List<imovelPtr>());
     while (!in.eof())
     {
         imovelPtr im = init_item(line, &in);
@@ -219,6 +210,7 @@ void le_atual(string caminho, ListPtr &imoveis)
     ifstream in;
     in.open(caminho);
 
+    //le o primeira linha com tipo
     std::string line = getline(&in);
 
     while (!in.eof())

@@ -1,3 +1,5 @@
+#include <memory>
+#include <iostream>
 #include "casa.h"
 
 casa::casa(int id, string nome, int quartos, int vagas,
@@ -14,12 +16,24 @@ casa::casa(int id, string nome, int quartos, int vagas,
     this->precoMetroQuadradoAreaLivre = precoMetroQuadradoAreaLivre;
 }
 
-std::function<bool(const imovel &i)> casa::isCasaAreaPreco(float area_limite, float preco_limite)
+float casa::preco() const
 {
-    std::function<bool(const imovel &i)> clos = [area_limite, preco_limite](const imovel &i) {
-        if (const casa *c = dynamic_cast<const casa *>(&i))
+    return (this->precoMetroQuadradoAreaPavimento * this->areaPavimento * this->numeroPavimentos) + (this->precoMetroQuadradoAreaLivre * this->areaLivre);
+}
+
+float casa::area() const
+{
+    return this->numeroPavimentos * this->areaPavimento;
+}
+
+std::function<bool(const imovelPtr &i)> isCasaAreaPreco(float area_limite, float preco_limite)
+{
+    std::function<bool(const imovelPtr &i)> clos = [area_limite, preco_limite](const imovelPtr &i) {
+        std::shared_ptr<casa> c(dynamic_cast<casa *>(i.get()));
+        if (c)
         {
-            return c->area() > area_limite && c->preco() < preco_limite;
+            bool ret = c->area() > area_limite && c->preco() < preco_limite;
+            return ret;
         }
 
         return false;
@@ -27,15 +41,40 @@ std::function<bool(const imovel &i)> casa::isCasaAreaPreco(float area_limite, fl
     return clos;
 }
 
-float casa::preco() const
+bool orderByQuarto(const imovelPtr item, const imovelPtr outro)
 {
-    return ((this->precoMetroQuadradoAreaPavimento) * this->areaPavimento * (this->numeroPavimentos)) + ((this->precoMetroQuadradoAreaLivre) * this->areaLivre);
+    int quartosItem;
+    int quartosOutro;
+    residencia *r = dynamic_cast<residencia *>(item.get());
+    if (r)
+    {
+        quartosItem = r->getQuartos();
+    }
+    residencia *o = dynamic_cast<residencia *>(outro.get());
+    if (o)
+    {
+        quartosOutro = o->getQuartos();
+    }
+
+    if (quartosItem == quartosOutro)
+    {
+        return item->getId() < outro->getId();
+    }
+
+    return quartosItem <= quartosOutro;
 }
 
-float casa::area() const
+ListPtr listCasasAreaPreco(ListPtr &imoveis, float area_limite, float preco_limite)
 {
-    return this->precoMetroQuadradoAreaPavimento * this->areaPavimento;
+
+    List<imovelPtr> *list = imoveis->filter(isCasaAreaPreco(area_limite, preco_limite));
+
+    list->sort(orderByQuarto);
+
+    return ListPtr(list);
 }
+
+
 
 imovel &casa::operator=(const imovel &object)
 {

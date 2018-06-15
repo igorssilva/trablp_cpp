@@ -3,7 +3,6 @@
 
 #include <cassert>
 #include <functional>
-#include <memory>
 
 // declara Lista
 template <class T>
@@ -60,6 +59,8 @@ struct List
 
 	// Encontra o objeto na lista
 	Node<T> *find(const T &object);
+
+	T index(int index);
 
 	inline T val(const T &object)
 	{
@@ -153,7 +154,7 @@ void List<T>::pop_back()
 	if (size() == 1)
 	{
 		delete head;
-		
+
 		head = tail = nullptr;
 	}
 
@@ -241,7 +242,6 @@ void List<T>::remove(Node<T> *n)
 				next_node->prev = n->prev;
 			}
 		}
-		delete n->value;
 		delete n;
 		sz--;
 	}
@@ -269,18 +269,18 @@ template <class T>
 List<T> *List<T>::filter(std::function<bool(const T &)> fn)
 {
 
-	List<T> *novo = new List<T>();
-	Node<T> *n = nullptr;
+	List<T> *l = new List<T>();
+	Node<T> *n = head;
 
-	for (n = head; n != nullptr; n = n->next)
+	for (n; n != nullptr; n = n->next)
 	{
 		if (fn(n->value))
 		{
-			novo->insert(n->value);
+			l->insert(n->value);
 		}
 	}
 
-	return novo;
+	return l;
 }
 
 template <class T>
@@ -428,6 +428,13 @@ void List<T>::apply(std::function<void(const T &)> fn)
 	{
 		fn(n->value);
 	}
+}
+
+//Retorna o item na posição index, 0 a size - 1;
+template <class T>
+T List<T>::index(int index)
+{
+	return T();
 }
 
 #endif /* LIST_H */

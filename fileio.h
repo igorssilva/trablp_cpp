@@ -16,7 +16,6 @@ typedef struct
 } Espec;
 
 
-typedef std::shared_ptr<List<imovelPtr>> ListPtr;
 
 ListPtr le_catalogo(string caminho);
 

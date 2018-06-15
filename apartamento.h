@@ -1,4 +1,5 @@
 #include <string>
+#include "imovel.h"
 #include "residencia.h"
 using std::string;
 #ifndef apartamento_h

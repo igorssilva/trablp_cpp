@@ -12,30 +12,30 @@ int imovel::getId() const
 }
 
 //Funcao para ordenar o imovel por preço
-bool orderByPreco(const imovel &item, const imovel &outro)
+bool orderByPreco(const imovelPtr item, const imovelPtr outro)
 {
-    float precoItem = item.preco();
-    float precoOutro = outro.preco();
+    float precoItem = item->preco();
+    float precoOutro = outro->preco();
 
     if (precoItem == precoOutro)
     {
-        return item.getId() < outro.getId();
+        return item->getId() < outro->getId();
     }
 
     return precoItem <= precoOutro;
 }
 
-List<imovelPtr> &imovel::listImoveisCaros(List<imovelPtr> &imoveis, int perc_imoveis_caros)
+ListPtr listImoveisCaros(ListPtr &imoveis, int perc_imoveis_caros)
 {
-    List<imovelPtr> *list = new List<imovelPtr>();
+    List<imovelPtr> *list;
 
-    int tam = imoveis.size() - (int)((float)perc_imoveis_caros / 100 * imoveis.size());
+    int tam = imoveis->size() - (int)((float)perc_imoveis_caros / 100 * imoveis->size());
 
-    //imoveis.sort(orderByPreco);
+    imoveis->sort(orderByPreco);
 
-    list = imoveis.slice(tam);
+    list = imoveis->slice(tam);
 
-    return *list;
+    return ListPtr(list);
 }
 
 bool imovel::operator==(const imovel &outro) const

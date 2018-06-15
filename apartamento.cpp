@@ -17,7 +17,7 @@ apartamento::apartamento(int id, string nome, int quartos, int vagas,
 float apartamento::preco() const
 {
     float fatorLazer = this->lazer ? 1.15 : 1.0;
-    float preco = (this->precoMetroQuadradoAreaConstruida) * this->areaConstruida * (0.9 + (this->andar) / (this->numeroAndares)) * fatorLazer;
+    float preco = (this->precoMetroQuadradoAreaConstruida) * this->areaConstruida * (0.9 + (float)(this->andar) / (this->numeroAndares)) * fatorLazer;
 
     return preco;
 }

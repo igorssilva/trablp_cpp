@@ -1,4 +1,5 @@
 #include <string>
+#include "imovel.h"
 #include "terreno.h"
 using std::string;
 #ifndef trapezio_h

@@ -6,7 +6,6 @@ using std::string;
 #ifndef imovel_h
 #define imovel_h
 
-typedef std::shared_ptr<imovel> imovelPtr;
 class imovel
 {
 private:
@@ -21,7 +20,7 @@ public:
   };
   imovel(int id, string nome);
   int getId() const;
-  static List<imovelPtr> &listImoveisCaros(List<imovelPtr> &imoveis, int perc_imoveis_caros);
+  
 
   //function overload
   virtual float preco() const {};
@@ -32,5 +31,10 @@ public:
   virtual imovel &operator=(const imovel &object);
 };
 
+typedef std::shared_ptr<imovel> imovelPtr;
+
+typedef std::shared_ptr<List<imovelPtr>> ListPtr;
+
+ListPtr listImoveisCaros(ListPtr &imoveis, int perc_imoveis_caros);
 
 #endif // imovel_h

@@ -36,6 +36,7 @@
         "typeinfo": "cpp",
         "utility": "cpp",
         "ctime": "cpp",
-        "iomanip": "cpp"
+        "iomanip": "cpp",
+        "memory": "cpp"
     }
 }
