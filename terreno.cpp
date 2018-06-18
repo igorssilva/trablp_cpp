@@ -7,16 +7,12 @@ terreno::terreno(int id, string nome, string solo, int precoMtQd) : imovel(id, n
     this->precoMtQd = precoMtQd;
 }
 
-bool terreno::isTerrenoArgiloso(const imovel &i)
+string terreno::getSolo() const
 {
-
-    if (const terreno *t = dynamic_cast<const terreno *>(&i))
-    {
-        return t->solo == "G";
-    }
-
-    return false;
+    return this->solo;
 }
+
+
 
 float fatorMultiplicativo(string solo)
 {
@@ -27,18 +23,6 @@ float fatorMultiplicativo(string solo)
     return 1.1;
 }
 
-bool terreno::orderByArea(const terreno &item, const terreno &outro) const
-{
-    float areaItem = item.area();
-    float areaOutro = outro.area();
-
-    if (areaItem == areaOutro)
-    {
-        return item.getId() < outro.getId();
-    }
-
-    return areaItem <= areaOutro;
-}
 
 float terreno::preco() const
 {
@@ -56,4 +40,53 @@ imovel &terreno::operator=(const imovel &object)
     }
 
     return *this;
+}
+
+
+// Funcoes para o relatorio
+
+
+// Funcao para ordenar lista por area
+bool orderByArea(const imovelPtr item, const imovelPtr outro) 
+{
+    float areaItem = item->area();
+    float areaOutro = outro->area();
+
+    if (areaItem == areaOutro)
+    {
+        return item->getId() > outro->getId();
+    }
+
+    return areaItem > areaOutro;
+}
+
+//Retorna se é um terreno argiloso
+bool isTerrenoArgiloso(const imovelPtr &i)
+{
+    std::shared_ptr<terreno> t(std::dynamic_pointer_cast<terreno>(i));
+    if (t)
+    {
+        bool ret = t->getSolo() == "G";
+        return ret;
+    }
+
+    return false;
+}
+
+
+ListPtr listMenoresArgilosos(ListPtr &imoveis, int perc_menores_arg)
+{    
+    List<imovelPtr> *list;
+   
+
+    list = imoveis->filter(isTerrenoArgiloso);
+    
+    int tam = list->size() - (int)((float)perc_menores_arg / 100 * list->size());
+    list->sort(orderByArea);
+
+    List<imovelPtr> *argilosos = list->slice(tam);
+    delete list;
+
+    return ListPtr(argilosos);
+
 }

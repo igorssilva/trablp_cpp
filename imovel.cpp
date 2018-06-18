@@ -11,6 +11,19 @@ int imovel::getId() const
     return id;
 }
 
+bool imovel::operator==(const imovel &outro) const
+{
+    return id == outro.getId();
+}
+
+
+imovel & imovel::operator=(const imovel &object)
+{
+    this->id = object.id;
+    this->nome = object.nome;
+    return *this;
+}
+
 //Funcao para ordenar o imovel por preço
 bool orderByPreco(const imovelPtr item, const imovelPtr outro)
 {
@@ -22,7 +35,7 @@ bool orderByPreco(const imovelPtr item, const imovelPtr outro)
         return item->getId() < outro->getId();
     }
 
-    return precoItem <= precoOutro;
+    return precoItem < precoOutro;
 }
 
 ListPtr listImoveisCaros(ListPtr &imoveis, int perc_imoveis_caros)
@@ -38,16 +51,13 @@ ListPtr listImoveisCaros(ListPtr &imoveis, int perc_imoveis_caros)
     return ListPtr(list);
 }
 
-bool imovel::operator==(const imovel &outro) const
+std::function<void(const imovelPtr &i)> appendId(string &str)
 {
-    return id == outro.getId();
+      std::function<void(const imovelPtr &i)> clos = [&str](const imovelPtr &i) {
+          string local = std::to_string(i->getId());
+          str.append(local);
+          str.append(", ");
+
+    };
+    return clos;
 }
-
-
-imovel & imovel::operator=(const imovel &object)
-{
-    this->id = object.id;
-    this->nome = object.nome;
-    return *this;
-}
-

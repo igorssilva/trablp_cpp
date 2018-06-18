@@ -13,7 +13,7 @@ float retangulo::area() const
 
 float retangulo::preco() const
 {
-    return terreno::preco() * area();
+    return terreno::preco() * this->area();
 }
 
 imovel &retangulo::operator=(const imovel &object)

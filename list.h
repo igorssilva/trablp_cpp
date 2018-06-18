@@ -2,6 +2,7 @@
 #define LIST_H
 
 #include <cassert>
+#include <memory>
 #include <functional>
 
 // declara Lista
@@ -28,7 +29,7 @@ template <class T>
 struct List
 {
 	// construtor de lista vazia
-	inline List() : head(nullptr), tail(nullptr), sz(0) { assert_invariant(); }
+	inline List() : head(nullptr), tail(nullptr), sz(0) { this->assert_invariant(); }
 
 	// desconstrutor da lista
 	inline ~List()
@@ -42,11 +43,11 @@ struct List
 	inline int size() const
 	{
 		assert_invariant();
-		return sz;
+		return this->sz;
 	}
 
 	// lista vazia
-	inline bool empty() const { return size() == 0; }
+	inline bool empty() const { return this->size() == 0; }
 
 	// insere uma objeto
 	void insert(const T &object);
@@ -60,12 +61,8 @@ struct List
 	// Encontra o objeto na lista
 	Node<T> *find(const T &object);
 
-	T index(int index);
-
-	inline T val(const T &object)
-	{
-		return find(object)->value;
-	}
+	//Retorna o item no index
+	T index(std::size_t index);
 
 	// altera o valor de um nó da lista
 	void changeValue(const T &object);
@@ -77,8 +74,7 @@ struct List
 	List<T> *filter(std::function<bool(const T &)> fn);
 
 	// retorna uma copia de uma parte da lista
-	List<T> *slice(int b);
-	List<T> *slice(int b, int e);
+	List<T> *slice(std::size_t b);
 
 	// ordena a lista de acordo com a função passada
 	void sort(std::function<bool(const T &, const T &)> fn);
@@ -87,7 +83,7 @@ struct List
 	// the invariant - must be always true for a well-formed List<>
 	// the first member function that we write for any non-trivial class
 	bool valid() const;
-	inline void assert_invariant() const { assert(valid()); }
+	inline void assert_invariant() const { assert(this->valid()); }
 
   private:
 	Node<T> *head;
@@ -101,25 +97,25 @@ struct List
 template <class T>
 bool List<T>::valid() const
 {
-	if (sz == 0)
-		return head == nullptr && tail == nullptr;
+	if (this->sz == 0)
+		return this->head == nullptr && this->tail == nullptr;
 
-	else if (sz == 1)
-		return head != nullptr && tail == head && head->prev == nullptr && head->next == nullptr;
+	else if (this->sz == 1)
+		return this->head != nullptr && this->tail == this->head && this->head->prev == nullptr && this->head->next == nullptr;
 
 	else
 	{
-		if (head != nullptr && tail != nullptr && head != tail && head->prev == nullptr && tail->next == nullptr)
+		if (this->head != nullptr && this->tail != nullptr && this->head != this->tail && this->head->prev == nullptr && this->tail->next == nullptr)
 		{
 			std::size_t n1 = 0;
-			for (Node<T> *t = head; t != nullptr; t = t->next)
+			for (Node<T> *t = this->head; t != nullptr; t = t->next)
 				++n1;
 
 			std::size_t n2 = 0;
-			for (Node<T> *t = tail; t != nullptr; t = t->prev)
+			for (Node<T> *t = this->tail; t != nullptr; t = t->prev)
 				++n2;
 
-			return n1 == sz && n1 == n2;
+			return n1 == this->sz && n1 == n2;
 		}
 		else
 			return false;
@@ -129,52 +125,52 @@ bool List<T>::valid() const
 template <class T>
 void List<T>::insert(const T &object)
 {
-	assert_invariant();
+	this->assert_invariant();
 
-	if (empty())
-		head = tail = new Node<T>(object);
+	if (this->sz == 0)
+		this->head = this->tail = new Node<T>(object);
 
 	else
 	{
-		tail->next = new Node<T>(object, nullptr, tail);
-		tail = tail->next;
+		this->tail->next = new Node<T>(object, nullptr, this->tail);
+		this->tail = this->tail->next;
 	}
 
-	++sz;
+	this->sz++;
 
-	assert_invariant();
+	this->assert_invariant();
 }
 
 template <class T>
 void List<T>::pop_back()
 {
-	assert(!empty());
-	assert_invariant();
+	assert(!this->empty());
+	this->assert_invariant();
 
-	if (size() == 1)
+	if (this->sz == 1)
 	{
-		delete head;
+		delete this->head;
 
-		head = tail = nullptr;
+		this->head = this->tail = nullptr;
 	}
 
 	else
 	{
-		tail = tail->prev;
-		delete tail->next;
-		tail->next = nullptr;
+		this->tail = this->tail->prev;
+		delete this->tail->next;
+		this->tail->next = nullptr;
 	}
 
-	--sz;
+	this->sz--;
 
-	assert_invariant();
+	this->assert_invariant();
 }
 
 template <class T>
 Node<T> *List<T>::find(const T &object)
 {
 	Node<T> *n = nullptr;
-	for (n = head; n != nullptr; n = n->next)
+	for (n = this->head; n != nullptr; n = n->next)
 	{
 		if (*(n->value) == *object)
 		{
@@ -188,118 +184,93 @@ Node<T> *List<T>::find(const T &object)
 template <class T>
 void List<T>::remove(const T &object)
 {
-	assert_invariant();
-	Node<T> *n = find(object);
+	this->assert_invariant();
+	Node<T> *n = this->find(object);
 
-	if (n != nullptr)
-	{
-		if (n == head)
-		{
-			head = n->next;
-		}
-		else
-		{
-			if (n == tail)
-			{
-				tail = n->prev;
-			}
-			else
-			{
-				Node<T> *prev_node = n->prev;
-				Node<T> *next_node = n->next;
-				prev_node->next = n->next;
-				next_node->prev = n->prev;
-			}
-		}
-		delete n;
-		sz--;
-	}
-
-	assert_invariant();
+	this->remove(n);
+	this->assert_invariant();
 }
 
 template <class T>
 void List<T>::remove(Node<T> *n)
 {
-	assert_invariant();
 	if (n != nullptr)
 	{
-		if (n == head)
+		if (this->sz == 1)
 		{
-			head = n->next;
+			this->head = this->tail = nullptr;
 		}
 		else
 		{
-			if (n == tail)
+			if (n == this->head)
 			{
-				tail = n->prev;
+				this->head = n->next;
+				this->head->prev = nullptr;
 			}
 			else
 			{
-				Node<T> *prev_node = n->prev;
-				Node<T> *next_node = n->next;
-				prev_node->next = n->next;
-				next_node->prev = n->prev;
+				if (n == this->tail)
+				{
+					this->tail = n->prev;
+					this->tail->next = nullptr;
+				}
+				else
+				{
+					Node<T> *prev_node = n->prev;
+					Node<T> *next_node = n->next;
+					prev_node->next = n->next;
+					next_node->prev = n->prev;
+				}
 			}
 		}
 		delete n;
-		sz--;
+		this->sz--;
 	}
-
-	assert_invariant();
 }
 
 template <class T>
 void List<T>::changeValue(const T &object)
 {
 
-	assert_invariant();
+	this->assert_invariant();
 	Node<T> *n = this->find(object);
 	if (n != nullptr)
 	{
 		n->value = object;
-		//this->remove(n);
-		//this->insert(object);
 	}
 
-	assert_invariant();
+	this->assert_invariant();
 }
 
 template <class T>
 List<T> *List<T>::filter(std::function<bool(const T &)> fn)
 {
 
-	List<T> *l = new List<T>();
-	Node<T> *n = head;
-
+	List<T> *novo = new List<T>();
+	Node<T> *n = this->head;
 	for (n; n != nullptr; n = n->next)
 	{
 		if (fn(n->value))
 		{
-			l->insert(n->value);
+			novo->insert(n->value);
 		}
 	}
 
-	return l;
+	return novo;
 }
 
 template <class T>
-List<T> *List<T>::slice(int b)
+List<T> *List<T>::slice(std::size_t b)
 {
 
 	List<T> *l = new List<T>();
 
-	if (empty())
+	if (this->sz == 0 || b >= this->sz)
 	{
 		return l;
 	}
 
-	if (b > sz)
-	{
-		return l;
-	}
-
-	Node<T> *n = head;
+	Node<T> *n = this->head;
 	int i = 0;
 	while (i < b)
 	{
@@ -308,32 +279,6 @@ List<T> *List<T>::slice(int b)
 	}
 
 	for (n; n != nullptr; n = n->next)
-	{
-		l->insert(n->value);
-	}
-
-	return l;
-}
-
-template <class T>
-List<T> *List<T>::slice(int b, int e)
-{
-	List<T> *l = new List<T>();
-
-	if (empty())
-	{
-		return l;
-	}
-
-	Node<T> *n = nullptr;
-	int i = 0;
-	for (n = head; i < b && n != nullptr; n = n->next)
-	{
-	}
-
-	int j = e - b;
-
-	for (n; j < e && n != nullptr; n = n->next)
 	{
 		l->insert(n->value);
 	}
@@ -432,9 +377,22 @@ void List<T>::apply(std::function<void(const T &)> fn)
 
 //Retorna o item na posição index, 0 a size - 1;
 template <class T>
-T List<T>::index(int index)
+T List<T>::index(std::size_t index)
 {
-	return T();
+	if (index > 0 && index <= this->sz)
+	{
+		Node<T> *node = this->head;
+		index--;
+		while (index > 0)
+		{
+			node = node->next;
+			index--;
+		}
+
+		return node->value;
+	}
+
+	return nullptr;
 }
 
 #endif /* LIST_H */

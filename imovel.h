@@ -37,4 +37,6 @@ typedef std::shared_ptr<List<imovelPtr>> ListPtr;
 
 ListPtr listImoveisCaros(ListPtr &imoveis, int perc_imoveis_caros);
 
+std::function<void(const imovelPtr &i)> appendId(string &str);
+
 #endif // imovel_h

@@ -13,7 +13,7 @@ float triangulo::area() const
 
 float triangulo::preco() const
 {
-    return terreno::preco() * area();
+    return terreno::preco() * this->area();
 }
 
 imovel &triangulo::operator=(const imovel &object)

@@ -14,7 +14,7 @@ float trapezio::area() const
 
 float trapezio::preco() const
 {
-    return terreno::preco() * area();
+    return terreno::preco() * this->area();
 }
 
 imovel &trapezio::operator=(const imovel &object)

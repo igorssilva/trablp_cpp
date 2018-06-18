@@ -24,7 +24,7 @@ void le_atual(string caminho, ListPtr &imoveis);
 Espec le_espec(string caminho);
 
 void esc_string(string caminho, string str);
-
+bool compareFiles(string entrada, string saida);
 
 
 #endif

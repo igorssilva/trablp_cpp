@@ -27,7 +27,6 @@ string getline(ifstream *in)
     return str;
 }
 
-
 float strtof(string line)
 {
     return std::stof(line);
@@ -79,8 +78,8 @@ imovelPtr init_item(string tipo, ifstream *in)
             int precoMetroQuadradoAreaLivre = stoi(line);
 
             //upcast de casa para imovel
-            casa *c = new casa(id, nome, quartos, vagas, numeroPavimentos, areaPavimento, precoMetroQuadradoAreaPavimento, areaLivre, precoMetroQuadradoAreaLivre);
-            im = imovelPtr(c);
+            casa c = casa(id, nome, quartos, vagas, numeroPavimentos, areaPavimento, precoMetroQuadradoAreaPavimento, areaLivre, precoMetroQuadradoAreaLivre);
+            im = std::make_shared<casa>(c);
         }
         else
         {
@@ -107,8 +106,8 @@ imovelPtr init_item(string tipo, ifstream *in)
                 int numeroAndares = stoi(line);
 
                 //upcast de apartamento para imovel
-                apartamento *apto = new apartamento(id, nome, quartos, vagas, andar, areaConstruida, precoMetroQuadradoAreaConstruida, lazer, numeroAndares);
-                im = imovelPtr(apto);
+                apartamento apto = apartamento(id, nome, quartos, vagas, andar, areaConstruida, precoMetroQuadradoAreaConstruida, lazer, numeroAndares);
+                im = std::make_shared<apartamento>(apto);
             }
         }
     }
@@ -134,8 +133,8 @@ imovelPtr init_item(string tipo, ifstream *in)
             float altura = strtof(line);
 
             //upcast de triangulo para imovel
-            triangulo *triang = new triangulo(id, nome, solo, precoMtQd, base, altura);
-            im = imovelPtr(triang);
+            triangulo triang = triangulo(id, nome, solo, precoMtQd, base, altura);
+            im = std::make_shared<triangulo>(triang);
         }
         else
         {
@@ -154,8 +153,8 @@ imovelPtr init_item(string tipo, ifstream *in)
                 float altura = strtof(line);
 
                 //upcast de trapezio para imovel
-                trapezio *trapez = new trapezio(id, nome, solo, precoMtQd, base1, base2, altura);
-                im = imovelPtr(trapez);
+                trapezio trapez = trapezio(id, nome, solo, precoMtQd, base1, base2, altura);
+                im = std::make_shared<trapezio>(trapez);
             }
             else
             {
@@ -170,8 +169,8 @@ imovelPtr init_item(string tipo, ifstream *in)
                     float lado2 = strtof(line);
 
                     //upcast de retangulo para imovel
-                    retangulo *retang = new retangulo(id, nome, solo, precoMtQd, lado1, lado2);
-                    im = imovelPtr(retang);
+                    retangulo retang = retangulo(id, nome, solo, precoMtQd, lado1, lado2);
+                    im = std::make_shared<retangulo>(retang);
                 }
             }
         }
@@ -188,7 +187,7 @@ ListPtr le_catalogo(string caminho)
 
     //le a primeira linha com tipo
     std::string line = getline(&in);
-    ListPtr imoveis = ListPtr(new List<imovelPtr>());
+    List<imovelPtr>* imoveis = new List<imovelPtr>();
     while (!in.eof())
     {
         imovelPtr im = init_item(line, &in);
@@ -202,7 +201,7 @@ ListPtr le_catalogo(string caminho)
     }
     in.close();
 
-    return imoveis;
+    return ListPtr(imoveis);
 }
 
 void le_atual(string caminho, ListPtr &imoveis)
@@ -295,4 +294,44 @@ Espec le_espec(string caminho)
         k,
     };
     return e;
+}
+
+void esc_string(string caminho, string str)
+{
+
+    std::ofstream out;
+    out.open(caminho);
+
+    out << str;
+
+    out.close();
+}
+
+bool compareFiles(string entrada, string saida)
+{
+    ifstream in;
+    in.open(entrada);
+
+    ifstream out;
+    out.open(saida);
+
+
+    std::string line_in = getline(&in);
+
+    std::string line_out = getline(&out);
+    
+    bool ret = line_in == line_out;
+
+    while (ret && !in.eof() && !out.eof())
+    {
+        ret = line_in == line_out;
+        line_in = getline(&in);
+
+        line_out = getline(&out);
+    }
+
+    in.close();
+    out.close();
+
+    return ret;
 }

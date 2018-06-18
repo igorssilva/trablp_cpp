@@ -29,7 +29,7 @@ float casa::area() const
 std::function<bool(const imovelPtr &i)> isCasaAreaPreco(float area_limite, float preco_limite)
 {
     std::function<bool(const imovelPtr &i)> clos = [area_limite, preco_limite](const imovelPtr &i) {
-        std::shared_ptr<casa> c(dynamic_cast<casa *>(i.get()));
+        std::shared_ptr<casa> c(std::dynamic_pointer_cast<casa>(i));
         if (c)
         {
             bool ret = c->area() > area_limite && c->preco() < preco_limite;
@@ -45,12 +45,12 @@ bool orderByQuarto(const imovelPtr item, const imovelPtr outro)
 {
     int quartosItem;
     int quartosOutro;
-    residencia *r = dynamic_cast<residencia *>(item.get());
+    std::shared_ptr<residencia> r(std::dynamic_pointer_cast<residencia>(item));
     if (r)
     {
         quartosItem = r->getQuartos();
     }
-    residencia *o = dynamic_cast<residencia *>(outro.get());
+    std::shared_ptr<residencia> o(std::dynamic_pointer_cast<residencia>(outro));
     if (o)
     {
         quartosOutro = o->getQuartos();
@@ -58,16 +58,17 @@ bool orderByQuarto(const imovelPtr item, const imovelPtr outro)
 
     if (quartosItem == quartosOutro)
     {
-        return item->getId() < outro->getId();
+        return item->getId() > outro->getId();
     }
 
-    return quartosItem <= quartosOutro;
+    return quartosItem > quartosOutro;
 }
 
 ListPtr listCasasAreaPreco(ListPtr &imoveis, float area_limite, float preco_limite)
 {
 
-    List<imovelPtr> *list = imoveis->filter(isCasaAreaPreco(area_limite, preco_limite));
+    List<imovelPtr> *list;
+    list = imoveis->filter(isCasaAreaPreco(area_limite, preco_limite));
 
     list->sort(orderByQuarto);
 
