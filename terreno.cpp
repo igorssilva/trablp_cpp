@@ -1,6 +1,6 @@
 #include "terreno.h"
-#include <typeinfo>
 
+// construtor
 terreno::terreno(int id, string nome, string solo, int precoMtQd) : imovel(id, nome)
 {
     this->solo = solo;
@@ -43,23 +43,6 @@ imovel &terreno::operator=(const imovel &object)
 }
 
 
-// Funcoes para o relatorio
-
-
-// Funcao para ordenar lista por area
-bool orderByArea(const imovelPtr item, const imovelPtr outro) 
-{
-    float areaItem = item->area();
-    float areaOutro = outro->area();
-
-    if (areaItem == areaOutro)
-    {
-        return item->getId() > outro->getId();
-    }
-
-    return areaItem > areaOutro;
-}
-
 //Retorna se é um terreno argiloso
 bool isTerrenoArgiloso(const imovelPtr &i)
 {
@@ -74,17 +57,20 @@ bool isTerrenoArgiloso(const imovelPtr &i)
 }
 
 
+// lista dos menores terrenos argilosos em ordem decrescente
 ListPtr listMenoresArgilosos(ListPtr &imoveis, int perc_menores_arg)
 {    
-    List<imovelPtr> *list;
-   
+    List<imovelPtr> *list;   
 
-    list = imoveis->filter(isTerrenoArgiloso);
+    list = imoveis->filter(isTerrenoArgiloso); // filtra terrenos argilosos
     
-    int tam = list->size() - (int)((float)perc_menores_arg / 100 * list->size());
-    list->sort(orderByArea);
+    list->sort(orderByArea);// ordena
 
+    // recorta a lista
+    int tam = list->size() - (int)((float)perc_menores_arg / 100 * list->size());
     List<imovelPtr> *argilosos = list->slice(tam);
+
+    // remove a lista temporaria
     delete list;
 
     return ListPtr(argilosos);

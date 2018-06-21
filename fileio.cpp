@@ -18,6 +18,7 @@ using std::endl;
 using std::ifstream;
 using std::stoi;
 
+// le uma string retirando \r da mesma
 string getline(ifstream *in)
 {
     string str;
@@ -27,11 +28,13 @@ string getline(ifstream *in)
     return str;
 }
 
+// converte string para float
 float strtof(string line)
 {
     return std::stof(line);
 }
 
+// Inicia um novo ponteiro de imovel a partir da entrada
 imovelPtr init_item(string tipo, ifstream *in)
 {
     imovelPtr im;
@@ -45,6 +48,8 @@ imovelPtr init_item(string tipo, ifstream *in)
     line = getline(in);
     string nome = line;
 
+
+    // verifica o tipo do imovel
     if (tipo == "casa" || tipo == "apto")
     {
         //le numero de quartos
@@ -180,6 +185,7 @@ imovelPtr init_item(string tipo, ifstream *in)
     return im;
 }
 
+
 ListPtr le_catalogo(string caminho)
 {
     ifstream in;
@@ -263,7 +269,7 @@ Espec le_espec(string caminho)
     std::string line;
 
     getline(in, line);
-    int perc_imoveis_caros = stoi(line);
+    int perc_imoveis_caros = stoi(line); 
 
     getline(in, line);
     int perc_menores_arg = stoi(line);
@@ -272,16 +278,16 @@ Espec le_espec(string caminho)
     float area_limite = strtof(line);
 
     getline(in, line);
-    float preco_limite = strtof(line);
+    float preco_limite = strtof(line); 
 
     getline(in, line);
-    int i = stoi(line);
+    int i = stoi(line); 
 
     getline(in, line);
-    int j = stoi(line);
+    int j = stoi(line); 
 
     getline(in, line);
-    int k = stoi(line);
+    int k = stoi(line); 
 
     in.close();
     Espec e = {
@@ -307,6 +313,7 @@ void esc_string(string caminho, string str)
     out.close();
 }
 
+
 bool compareFiles(string entrada, string saida)
 {
     ifstream in;
@@ -322,6 +329,7 @@ bool compareFiles(string entrada, string saida)
     
     bool ret = line_in == line_out;
 
+    // enquanto as duas linhas são iguais ou nao chegou ao fim de um dos arquivos, continua lendo.
     while (ret && !in.eof() && !out.eof())
     {
         ret = line_in == line_out;
@@ -333,5 +341,6 @@ bool compareFiles(string entrada, string saida)
     in.close();
     out.close();
 
+    // retorna se chegou ao final com todas as linhas iguais
     return ret;
 }

@@ -7,6 +7,7 @@ using std::string;
 
 class apartamento : public residencia
 {
+  // campos do apartamento
 private:
   int andar;
   float areaConstruida;
@@ -15,13 +16,18 @@ private:
   int numeroAndares;
 
 public:
+  //construtor para todos os campos
   apartamento(int id, string nome, int quartos, int vagas,
               int andar,
               float areaConstruida,
               int precoMetroQuadradoAreaConstruida,
               bool lazer,
               int numeroAndares);
+
+  // preco overload
   float preco() const;
+
+  // atribuição
   imovel &operator=(const imovel &object);
 };
 

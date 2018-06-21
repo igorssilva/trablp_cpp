@@ -1,5 +1,6 @@
 #include "apartamento.h"
 
+// construtor
 apartamento::apartamento(int id, string nome, int quartos, int vagas,
                          int andar,
                          float areaConstruida,
@@ -14,6 +15,7 @@ apartamento::apartamento(int id, string nome, int quartos, int vagas,
     this->numeroAndares = numeroAndares;
 }
 
+// retorna o preço do apartamento
 float apartamento::preco() const
 {
     float fatorLazer = this->lazer ? 1.15 : 1.0;
@@ -22,6 +24,7 @@ float apartamento::preco() const
     return preco;
 }
 
+// operador de atribuição
 imovel &apartamento::operator=(const imovel &object)
 {
     residencia::operator=(object);

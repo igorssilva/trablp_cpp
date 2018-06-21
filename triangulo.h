@@ -7,15 +7,21 @@ using std::string;
 
 class triangulo : public terreno
 {
-  private:
-    float base;
-    float altura;
+  // campos do triangulo
+private:
+  float base;
+  float altura;
 
-  public:
-    triangulo(int id, string nome, string solo, int precoMqQd, float base, float altura);
-    float preco() const;
-    float area() const;
-    imovel & operator=(const imovel & object);
+public:
+  // construtor para todos os campos do triangulo
+  triangulo(int id, string nome, string solo, int precoMqQd, float base, float altura);
+
+  // overload funcoes
+  float preco() const;
+  float area() const;
+
+  // operador de atribuição
+  imovel &operator=(const imovel &object);
 };
 
 #endif

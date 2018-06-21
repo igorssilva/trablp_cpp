@@ -2,6 +2,7 @@
 #include <iostream>
 #include "casa.h"
 
+// construtor
 casa::casa(int id, string nome, int quartos, int vagas,
            int numeroPavimentos,
            float areaPavimento,
@@ -16,19 +17,23 @@ casa::casa(int id, string nome, int quartos, int vagas,
     this->precoMetroQuadradoAreaLivre = precoMetroQuadradoAreaLivre;
 }
 
+// retorna o preço da casa
 float casa::preco() const
 {
     return (this->precoMetroQuadradoAreaPavimento * this->areaPavimento * this->numeroPavimentos) + (this->precoMetroQuadradoAreaLivre * this->areaLivre);
 }
 
+// retorna a area construida da casa
 float casa::area() const
 {
     return this->numeroPavimentos * this->areaPavimento;
 }
 
+// funcao para verificar se é uma casa e está dentro dos parametros
 std::function<bool(const imovelPtr &i)> isCasaAreaPreco(float area_limite, float preco_limite)
 {
     std::function<bool(const imovelPtr &i)> clos = [area_limite, preco_limite](const imovelPtr &i) {
+        // veririca se o imovel é uma casa
         std::shared_ptr<casa> c(std::dynamic_pointer_cast<casa>(i));
         if (c)
         {
@@ -41,42 +46,20 @@ std::function<bool(const imovelPtr &i)> isCasaAreaPreco(float area_limite, float
     return clos;
 }
 
-bool orderByQuarto(const imovelPtr item, const imovelPtr outro)
-{
-    int quartosItem;
-    int quartosOutro;
-    std::shared_ptr<residencia> r(std::dynamic_pointer_cast<residencia>(item));
-    if (r)
-    {
-        quartosItem = r->getQuartos();
-    }
-    std::shared_ptr<residencia> o(std::dynamic_pointer_cast<residencia>(outro));
-    if (o)
-    {
-        quartosOutro = o->getQuartos();
-    }
-
-    if (quartosItem == quartosOutro)
-    {
-        return item->getId() > outro->getId();
-    }
-
-    return quartosItem > quartosOutro;
-}
-
+// retorna lista de casas com area superior a passada e preço inferior ao passado
 ListPtr listCasasAreaPreco(ListPtr &imoveis, float area_limite, float preco_limite)
 {
 
     List<imovelPtr> *list;
-    list = imoveis->filter(isCasaAreaPreco(area_limite, preco_limite));
+    list = imoveis->filter(isCasaAreaPreco(area_limite, preco_limite)); // filtra
 
-    list->sort(orderByQuarto);
+    list->sort(orderByQuarto); // ordena
 
     return ListPtr(list);
 }
 
 
-
+// operador de atribuição
 imovel &casa::operator=(const imovel &object)
 {
     residencia::operator=(object);

@@ -79,7 +79,9 @@ struct List
 	// ordena a lista de acordo com a função passada
 	void sort(std::function<bool(const T &, const T &)> fn);
 
+	// aplica uma funcao em cada elemento da lista
 	void apply(std::function<void(const T &)> fn);
+
 	// the invariant - must be always true for a well-formed List<>
 	// the first member function that we write for any non-trivial class
 	bool valid() const;
@@ -94,6 +96,7 @@ struct List
 	Node<T> *partition(Node<T> *l, Node<T> *h, std::function<bool(const T &, const T &)> fn);
 };
 
+//Verifica se a lista está consistente
 template <class T>
 bool List<T>::valid() const
 {
@@ -122,6 +125,7 @@ bool List<T>::valid() const
 	}
 }
 
+// Insere um novo elemento no final da lista
 template <class T>
 void List<T>::insert(const T &object)
 {
@@ -141,6 +145,8 @@ void List<T>::insert(const T &object)
 	this->assert_invariant();
 }
 
+
+//Retira o ultimo elemento da lista
 template <class T>
 void List<T>::pop_back()
 {
@@ -166,6 +172,7 @@ void List<T>::pop_back()
 	this->assert_invariant();
 }
 
+// Encontra um elemento na lista (assume que são ponteiros para derreferenciar o operador =)
 template <class T>
 Node<T> *List<T>::find(const T &object)
 {
@@ -181,6 +188,7 @@ Node<T> *List<T>::find(const T &object)
 	return nullptr;
 }
 
+//remove um elemento na lista
 template <class T>
 void List<T>::remove(const T &object)
 {
@@ -191,6 +199,7 @@ void List<T>::remove(const T &object)
 	this->assert_invariant();
 }
 
+//Remove um nó da lista
 template <class T>
 void List<T>::remove(Node<T> *n)
 {
@@ -228,6 +237,7 @@ void List<T>::remove(Node<T> *n)
 	}
 }
 
+// Altera o valor de um elemento da lista
 template <class T>
 void List<T>::changeValue(const T &object)
 {
@@ -242,6 +252,7 @@ void List<T>::changeValue(const T &object)
 	this->assert_invariant();
 }
 
+// retorna uma nova lista filtrada pela funcao passada
 template <class T>
 List<T> *List<T>::filter(std::function<bool(const T &)> fn)
 {
@@ -259,6 +270,7 @@ List<T> *List<T>::filter(std::function<bool(const T &)> fn)
 	return novo;
 }
 
+// Recorta a lista retornando uma a partir dos dados passados
 template <class T>
 List<T> *List<T>::slice(std::size_t b)
 {
@@ -286,8 +298,9 @@ List<T> *List<T>::slice(std::size_t b)
 	return l;
 }
 
-template <class T>
+
 //Troca o elemento a e b de lugar
+template <class T>
 void List<T>::swap(Node<T> *a, Node<T> *b)
 {
 	if (a == b)
@@ -300,12 +313,12 @@ void List<T>::swap(Node<T> *a, Node<T> *b)
 	b->value = temp;
 }
 
-template <class T>
 /*
 	Considera o último elemento como pivô, coloca o elemento pivô em seu
 	posição correta na lista ordenada, e coloca todos os menores (menores que
 	pivô) para a esquerda do pivô e todos os elementos maiores para a direita do pivô
 */
+template <class T>
 Node<T> *List<T>::partition(Node<T> *l, Node<T> *h, std::function<bool(const T &, const T &)> fn)
 {
 	// Seleciona o pivo como o elemento h
@@ -345,8 +358,8 @@ Node<T> *List<T>::partition(Node<T> *l, Node<T> *h, std::function<bool(const T &
 	return i;
 }
 
-template <class T>
 //Ordena a lista de acordo com a comparação passada por função
+template <class T>
 void List<T>::_quickSort(Node<T> *l, Node<T> *h, std::function<bool(const T &, const T &)> fn)
 {
 
@@ -358,13 +371,14 @@ void List<T>::_quickSort(Node<T> *l, Node<T> *h, std::function<bool(const T &, c
 	}
 }
 
-template <class T>
 //Funcao chamada para ordenar
+template <class T>
 void List<T>::sort(std::function<bool(const T &, const T &)> fn)
 {
 	_quickSort(head, tail, fn);
 }
 
+// aplica uma função em cada elemento da lista
 template <class T>
 void List<T>::apply(std::function<void(const T &)> fn)
 {
@@ -375,7 +389,7 @@ void List<T>::apply(std::function<void(const T &)> fn)
 	}
 }
 
-//Retorna o item na posição index, 0 a size - 1;
+//Retorna o item na posição index;
 template <class T>
 T List<T>::index(std::size_t index)
 {
@@ -394,5 +408,6 @@ T List<T>::index(std::size_t index)
 
 	return nullptr;
 }
+
 
 #endif /* LIST_H */
